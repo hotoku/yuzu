@@ -2,16 +2,25 @@ import hashlib
 import os
 import pickle
 from functools import wraps
+import shutil
 
 from . import logging
 
 USE_CACHE = True
 LOGGER = logging.get_logger(__file__)
+CACHE_DIR = ".cache"
+
+os.makedirs(CACHE_DIR, exist_ok=True)
 
 
 def activate_cache(flag):
     global USE_CACHE
     USE_CACHE = flag
+
+
+def clear_cache():
+    shutil.rmtree(CACHE_DIR)
+    os.makedirs(CACHE_DIR)
 
 
 def cache(ignore_args=[], ignore_kw=[]):
