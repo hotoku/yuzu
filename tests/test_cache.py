@@ -9,8 +9,9 @@ def clear():
 
 def test_cache1(clear):
     """
-    同じ引数で複数回呼ばれた場合、関数は一度だけ呼び出される。
-    同じ引数で呼び出した場合、返り値は同じ値。
+    When the function is called twice with same argument,
+    the function is not executed in the second time.
+    The returned values are same.
     """
     num = 0
     @cache()
@@ -30,7 +31,7 @@ def test_cache1(clear):
 
 def test_cache2(clear):
     """
-    ignore_argに指定された引数は、キャッシュ判定の際に無視される。
+    The arguments in `ignore_args` are not considered for cache evaluation.
     """
     num = 0
     @cache(ignore_args=[0,2])
@@ -53,7 +54,7 @@ def test_cache2(clear):
 
 def test_cache3(clear):
     """
-    ignore_argに指定された引数は、キャッシュ判定の際に無視される。
+    The arguments in `ignore_kw` are not considered for cache evaluation.
     """
     num = 0
     @cache(ignore_kw=["x", "z"])
@@ -76,7 +77,7 @@ def test_cache3(clear):
 
 def test_cache4(clear):
     """
-    activate_cacheによって、キャッシュ利用有無が変わる
+    Calling `activate_cache` switches cache usage.
     """
     num = 0
     @cache()
