@@ -49,3 +49,26 @@ def test_cache2(clear):
     ret2 = func(3, 4, 5)
     assert num == 2
     assert ret2 != ret1
+
+
+def test_cache3(clear):
+    """
+    ignore_argに指定された引数は、キャッシュ判定の際に無視される。
+    """
+    num = 0
+    @cache(ignore_kw=["x", "z"])
+    def func(x=0, y=0, z=0):
+        nonlocal num
+        num += 1
+        return y + 1
+
+    assert num == 0
+    ret1 = func(x=0, y=1, z=2)
+    assert num == 1
+    ret1_ = func(x=1, y=1, z=3)
+    assert num == 1
+    assert ret1 == ret1_
+
+    ret2 = func(x=3, y=4, z=5)
+    assert num == 2
+    assert ret2 != ret1
