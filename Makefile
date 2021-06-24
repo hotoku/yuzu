@@ -15,3 +15,11 @@ major:
 	bumpversion major
 	git push
 	git push --tag
+
+.PHONY: build
+build:
+	poetry build
+
+.PHONY: publish
+publish: build
+	poetry publish
