@@ -7,9 +7,9 @@ from functools import wraps
 LOGGERS = []
 
 
-def setup_logger(debug=False):
+def setup_logger(logfile, debug=False):
     for l in LOGGERS:
-        setup_logger1(l, debug)
+        setup_logger1(l, logfile, debug)
 
 
 def get_logger(name):
@@ -18,11 +18,11 @@ def get_logger(name):
     return ret
 
 
-def setup_logger1(LOGGER, debug=False):
+def setup_logger1(LOGGER, logfile, debug=False):
     formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     to_stderr = logging.StreamHandler(sys.stderr)
     to_stderr.setFormatter(formatter)
-    to_file = logging.FileHandler(os.path.split(re.sub(r"\.py$", ".log", __file__))[1])
+    to_file = logging.FileHandler(os.path.split(re.sub(r"\.py$", ".log", logfile))[1])
     to_file.setFormatter(formatter)
     LOGGER.addHandler(to_stderr)
     LOGGER.addHandler(to_file)
