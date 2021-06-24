@@ -72,3 +72,26 @@ def test_cache3(clear):
     ret2 = func(x=3, y=4, z=5)
     assert num == 2
     assert ret2 != ret1
+
+
+def test_cache4(clear):
+    """
+    activate_cacheによって、キャッシュ利用有無が変わる
+    """
+    num = 0
+    @cache()
+    def func(x):
+        nonlocal num
+        num += 1
+        return x + 1
+    assert num == 0
+    func(1)
+    assert num == 1
+    func(1)
+    assert num == 1
+    activate_cache(False)
+    func(1)
+    assert num == 2
+    activate_cache(True)
+    func(1)
+    assert num == 2
