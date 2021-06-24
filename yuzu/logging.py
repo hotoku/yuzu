@@ -1,9 +1,8 @@
 import logging
-import sys
-import re
 import os
+import re
+import sys
 from functools import wraps
-
 
 LOGGERS = []
 
@@ -20,12 +19,10 @@ def get_logger(name):
 
 
 def setup_logger1(LOGGER, debug=False):
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     to_stderr = logging.StreamHandler(sys.stderr)
     to_stderr.setFormatter(formatter)
-    to_file = logging.FileHandler(os.path.split(
-        re.sub(r"\.py$", ".log", __file__))[1])
+    to_file = logging.FileHandler(os.path.split(re.sub(r"\.py$", ".log", __file__))[1])
     to_file.setFormatter(formatter)
     LOGGER.addHandler(to_stderr)
     LOGGER.addHandler(to_file)
@@ -44,18 +41,15 @@ def get_annotation(LOGGER):
         def annotator(f):
             @wraps(f)
             def executor(*args, **kw):
-                args_ = [
-                    a for i, a in enumerate(args)
-                    if i in log_args
-                ]
-                kw_ = {
-                    k: v for k, v in kw.items()
-                    if k in log_kw
-                }
+                args_ = [a for i, a in enumerate(args) if i in log_args]
+                kw_ = {k: v for k, v in kw.items() if k in log_kw}
                 LOGGER.info(f"{f.__name__} {args_} {kw_} start")
                 ret = f(*args, **kw)
                 LOGGER.info(f"{f.__name__} end")
                 return ret
+
             return executor
+
         return annotator
+
     return log
