@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
+import subprocess as sp
 
-import requests
 import click
 
 from yuzu.cache import cache, activate_cache
@@ -27,7 +27,16 @@ class Getter:
         pass
 
     def get(self, url):
-        return requests.get(url)
+        ret = sp.run([
+            "curl",
+            url
+        ],
+               stdout=sp.PIPE,
+               stderr=sp.PIPE)
+        return {
+            "stdout": ret.stdout,
+            "stderr": ret.stderr
+        }
 
 class Greeter:
     def __init__(self):
@@ -50,7 +59,7 @@ class Greeter2:
 @click.option("--debug/--nodebug", type=bool, default=False)
 @click.option("--cache/--nocache", type=bool, default=True)
 def main(debug, cache):
-    setup_logger(debug)
+    setup_logger("sample.log", debug)
     LOGGER.debug("debug message")
 
     activate_cache(cache)
