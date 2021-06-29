@@ -52,7 +52,7 @@ class Greeter2:
 
     @cache(ignore_args=[0])
     def greet(self, name):
-        return f"Bon jour {name} !"
+        return f"Bonjour {name} !"
     
 
 @click.command()
@@ -74,8 +74,8 @@ def main(debug, cache):
     print(gr.greet("inoue"))
 
     gr2 = Greeter2()
-    print(gr.greet("inoue"))
-    print(gr.greet("inoue"))
+    print(gr2.greet("inoue"))
+    print(gr2.greet("inoue"))
     
 
 
