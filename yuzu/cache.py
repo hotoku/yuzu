@@ -32,7 +32,7 @@ def cache(ignore_args=[], ignore_kw=[]):
             key = {"args": args_, "kw": kw_}
             bytes = pickle.dumps(key)
             hash = hashlib.sha256(bytes).hexdigest()
-            fpath = f".cache/{f.__name__}-{hash}"
+            fpath = f".cache/{f.__module__}.{f.__qualname__}-{hash}"
             cache_exist = os.path.exists(fpath)
             LOGGER.info("%s: cache_exist=%s USE_CACHE=%s NO_USE_CACHE=%s", f.__name__, cache_exist, USE_CACHE, NO_USE_CACHE)
             if not cache_exist or not USE_CACHE or NO_USE_CACHE:
