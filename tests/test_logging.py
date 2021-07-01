@@ -12,4 +12,5 @@ def test_logging():
     def func(x):
         return x
 
+    # todo: implement destination modification and check the log output
     func(1)
