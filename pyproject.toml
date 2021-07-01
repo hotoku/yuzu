@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "yuzu"
 version = "0.4.2"
-description = ""
+description = "Lightweight and useful annotation package for logging and caching"
 authors = ["Yasunori Horikoshi <hotoku@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
