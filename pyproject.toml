@@ -3,6 +3,9 @@ name = "yuzu"
 version = "0.4.4"
 description = "Lightweight and useful annotation package for logging and caching"
 authors = ["Yasunori Horikoshi <hotoku@users.noreply.github.com>"]
+readme = "README.rst"
+license = "MIT"
+repository = "https://github.com/hotoku/yuzu"
 
 [tool.poetry.dependencies]
 python = "^3.7"
