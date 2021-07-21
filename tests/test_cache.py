@@ -2,6 +2,7 @@ from yuzu.cache import cache, activate_cache, clear_cache
 
 import pytest
 
+
 @pytest.fixture
 def clear():
     clear_cache()
@@ -14,6 +15,7 @@ def test_cache1(clear):
     The returned values are same.
     """
     num = 0
+
     @cache()
     def func(x):
         nonlocal num
@@ -29,12 +31,14 @@ def test_cache1(clear):
     assert num == 2
     assert not ret1 == ret2
 
+
 def test_cache2(clear):
     """
     The arguments in `ignore_args` are not considered for cache evaluation.
     """
     num = 0
-    @cache(ignore_args=[0,2])
+
+    @cache(ignore_args=[0, 2])
     def func(x, y, z):
         nonlocal num
         num += 1
@@ -57,6 +61,7 @@ def test_cache3(clear):
     The arguments in `ignore_kw` are not considered for cache evaluation.
     """
     num = 0
+
     @cache(ignore_kw=["x", "z"])
     def func(x=0, y=0, z=0):
         nonlocal num
@@ -80,6 +85,7 @@ def test_cache4(clear):
     Calling `activate_cache` switches cache usage.
     """
     num = 0
+
     @cache()
     def func(x):
         nonlocal num
