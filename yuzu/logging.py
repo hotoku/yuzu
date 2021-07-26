@@ -37,15 +37,18 @@ def setup_logger1(LOGGER, logfile, debug=False):
 
 
 def get_annotation(LOGGER):
-    def log(log_args=[], log_kw=[]):
+    def log(ignore_args=[], ignore_kw=[], return_value=True):
         def annotator(f):
             @wraps(f)
             def executor(*args, **kw):
-                args_ = [a for i, a in enumerate(args) if i in log_args]
-                kw_ = {k: v for k, v in kw.items() if k in log_kw}
+                args_ = [a for i, a in enumerate(args) if i not in ignore_args]
+                kw_ = {k: v for k, v in kw.items() if k not in ignore_kw}
                 LOGGER.info(f"{f.__name__} {args_} {kw_} start")
                 ret = f(*args, **kw)
-                LOGGER.info(f"{f.__name__} end")
+                if return_value:
+                    LOGGER.info(f"{f.__name__} end, value={ret}")
+                else:
+                    LOGGER.info(f"{f.__name__} end")
                 return ret
 
             return executor
