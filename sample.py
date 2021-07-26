@@ -10,11 +10,13 @@ from yuzu.logging import get_logger, get_annotation, setup_logger
 LOGGER = get_logger(__file__)
 log = get_annotation(LOGGER)
 
-@log(log_args=[0, 1])
+
+@log()
 @cache()
 def f(x, y):
     print("calculating", x, y)
     return x + y
+
 
 @log()
 @cache(ignore_args=[1])
@@ -31,12 +33,13 @@ class Getter:
             "curl",
             url
         ],
-               stdout=sp.PIPE,
-               stderr=sp.PIPE)
+            stdout=sp.PIPE,
+            stderr=sp.PIPE)
         return {
             "stdout": ret.stdout,
             "stderr": ret.stderr
         }
+
 
 class Greeter:
     def __init__(self):
@@ -46,6 +49,7 @@ class Greeter:
     def greet(self, name):
         return f"Hello {name} !"
 
+
 class Greeter2:
     def __init__(self):
         pass
@@ -53,7 +57,7 @@ class Greeter2:
     @cache(ignore_args=[0])
     def greet(self, name):
         return f"Bonjour {name} !"
-    
+
 
 @click.command()
 @click.option("--debug/--nodebug", type=bool, default=False)
@@ -76,7 +80,6 @@ def main(debug, cache):
     gr2 = Greeter2()
     print(gr2.greet("inoue"))
     print(gr2.greet("inoue"))
-    
 
 
 if __name__ == "__main__":
