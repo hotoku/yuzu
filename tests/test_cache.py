@@ -102,3 +102,19 @@ def test_cache4(clear):
     activate_cache(True)
     func(1)
     assert num == 2
+
+def test_cache5(clear):
+    """
+    Check keyword arguments
+    """
+    num = 0
+    @cache()
+    def func(x, y):
+        nonlocal num
+        num += 1
+        return x + y
+    assert num == 0
+    func(x=1, y=2)
+    assert num == 1
+    func(y=2, x=1)
+    assert num == 1

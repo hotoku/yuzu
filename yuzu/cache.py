@@ -29,7 +29,9 @@ def cache(ignore_args=[], ignore_kw=[]):
         def executor(*args, **kw):
             args_ = [a for i, a in enumerate(args) if i not in ignore_args]
             kw_ = {k: v for k, v in kw.items() if k not in ignore_kw}
-            key = {"args": args_, "kw": kw_}
+            keys = sorted(kw_)
+            kw2 = {k: kw_[k] for k in keys}
+            key = {"args": args_, "kw": kw2}
             bytes = pickle.dumps(key)
             hash = hashlib.sha256(bytes).hexdigest()
             fpath = f".cache/{f.__module__}.{f.__qualname__}-{hash}"
