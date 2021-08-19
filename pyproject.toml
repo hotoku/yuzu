@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "yuzu"
-version = "1.2.0"
+version = "1.3.0"
 description = "Lightweight and useful annotation package for logging and caching"
 authors = ["Yasunori Horikoshi <hotoku@users.noreply.github.com>"]
 readme = "README.rst"
