@@ -10,12 +10,16 @@ USE_CACHE = True
 LOGGER = logging.get_logger(__file__)
 CACHE_DIR = ".cache"
 
-os.makedirs(CACHE_DIR, exist_ok=True)
+
 
 
 def activate_cache(flag):
     global USE_CACHE
     USE_CACHE = flag
+
+def cache_dir(dir):
+    global CACHE_DIR
+    CACHE_DIR = dir
 
 
 def clear_cache():
@@ -27,6 +31,8 @@ def cache(ignore_args=[], ignore_kw=[]):
     def annotator(f):
         @wraps(f)
         def executor(*args, **kw):
+            os.makedirs(CACHE_DIR, exist_ok=True)
+
             args_ = [a for i, a in enumerate(args) if i not in ignore_args]
             kw_ = {k: v for k, v in kw.items() if k not in ignore_kw}
             keys = sorted(kw_)
