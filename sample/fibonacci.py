@@ -1,19 +1,11 @@
 import logging
 import sys
 
-from yuzu.logging import get_annotation
+from yuzu.logging import get_annotation, setup_logging
 from yuzu.cache import cache
 
-
-logging.\
-    getLogger().\
-    addHandler(
-        logging.StreamHandler(sys.stderr)
-    )
-
-
+setup_logging()
 LOGGER = logging.getLogger(__file__)
-LOGGER.setLevel(logging.DEBUG)
 
 log = get_annotation(LOGGER)
 

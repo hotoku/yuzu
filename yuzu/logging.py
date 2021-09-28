@@ -1,6 +1,17 @@
 import logging
 import os
 from functools import wraps
+import sys
+
+
+def setup_logging(level=logging.INFO, logfile=None):
+    root_logger = logging.getLogger()
+    root_logger.setLevel(level)
+    to_stderr = logging.StreamHandler(sys.stderr)
+    root_logger.addHandler(to_stderr)
+    if logfile:
+        to_file = logging.FileHandler(logfile)
+        root_logger.addHandler(to_file)
 
 
 def get_annotation(LOGGER):
