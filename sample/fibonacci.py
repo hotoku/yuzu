@@ -1,19 +1,30 @@
-from sys import argv
-from yuzu.cache import cache
-from yuzu.logging import get_logger, get_annotation, setup_logger
+import logging
+import sys
 
-LOGGER = get_logger(__file__)
+from yuzu.logging import get_annotation
+from yuzu.cache import cache
+
+
+logging.\
+    getLogger().\
+    addHandler(
+        logging.StreamHandler(sys.stderr)
+    )
+
+
+LOGGER = logging.getLogger(__file__)
+LOGGER.setLevel(logging.DEBUG)
+
 log = get_annotation(LOGGER)
-setup_logger()
 
 
 @log()
 @cache()
-def fib(n):
-    if n <= 1:
+def fib(x):
+    if x <= 1:
         return 1
-    return fib(n-1) + fib(n-2)
+    return fib(x - 1) + fib(x - 2)
 
 
-n = int(argv[1])
+n = 10
 print(f"fib({n})={fib(n)}")
