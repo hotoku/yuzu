@@ -11,9 +11,14 @@ LOGGER = logging.getLogger(__file__)
 CACHE_DIR = ".cache"
 
 
-def activate_cache(flag):
+def activate_cache():
     global USE_CACHE
-    USE_CACHE = flag
+    USE_CACHE = True
+
+
+def deactivate_cache():
+    global USE_CACHE
+    USE_CACHE = False
 
 
 def cache_dir(dir):
