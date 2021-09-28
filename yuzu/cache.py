@@ -11,11 +11,10 @@ LOGGER = logging.get_logger(__file__)
 CACHE_DIR = ".cache"
 
 
-
-
 def activate_cache(flag):
     global USE_CACHE
     USE_CACHE = flag
+
 
 def cache_dir(dir):
     global CACHE_DIR
@@ -23,7 +22,11 @@ def cache_dir(dir):
 
 
 def clear_cache():
-    shutil.rmtree(CACHE_DIR)
+    if os.path.exists(CACHE_DIR):
+        if os.path.isdir(CACHE_DIR):
+            shutil.rmtree(CACHE_DIR)
+        else:
+            raise RuntimeError(f"{CACHE_DIR} exists but is not directory")
     os.makedirs(CACHE_DIR)
 
 
