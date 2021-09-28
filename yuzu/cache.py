@@ -4,10 +4,10 @@ import pickle
 from functools import wraps
 import shutil
 
-from . import logging
+import logging
 
 USE_CACHE = True
-LOGGER = logging.get_logger(__file__)
+LOGGER = logging.getLogger(__file__)
 CACHE_DIR = ".cache"
 
 
