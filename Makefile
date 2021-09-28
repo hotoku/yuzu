@@ -2,6 +2,7 @@ define release
 $1:
 	bump2version $$@
 	git push --tag
+	git push
 endef
 
 
