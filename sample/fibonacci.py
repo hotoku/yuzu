@@ -1,5 +1,4 @@
 import logging
-import sys
 
 from yuzu.logging import get_annotation, setup_logging
 from yuzu.cache import cache
