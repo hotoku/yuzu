@@ -1,6 +1,6 @@
 import pytest
 
-from yuzu.cache import cache, activate_cache, clear_cache
+from yuzu.cache import cache, activate_cache, deactivate_cache, clear_cache
 
 
 @pytest.fixture
@@ -96,18 +96,20 @@ def test_cache4(clear):
     assert num == 1
     func(1)
     assert num == 1
-    activate_cache(False)
+    deactivate_cache()
     func(1)
     assert num == 2
-    activate_cache(True)
+    activate_cache()
     func(1)
     assert num == 2
+
 
 def test_cache5(clear):
     """
     Check keyword arguments
     """
     num = 0
+
     @cache()
     def func(x, y):
         nonlocal num
