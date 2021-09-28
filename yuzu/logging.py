@@ -4,17 +4,18 @@ from functools import wraps
 import sys
 
 
-def setup_logging(level=logging.INFO, logfile=None):
+def setup_logging(level=logging.INFO,
+                  logfile=None,
+                  format_str="%(asctime)s - %(name)s - %(levelname)s - %(message)s"):
     root_logger = logging.getLogger()
     root_logger.setLevel(level)
 
-    formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    formatter = logging.Formatter(format_str)
 
     to_stderr = logging.StreamHandler(sys.stderr)
     root_logger.addHandler(to_stderr)
     to_stderr.setFormatter(formatter)
-    if logfile:
+    if logfile is not None:
         to_file = logging.FileHandler(logfile)
         root_logger.addHandler(to_file)
         to_file.setFormatter(formatter)
