@@ -50,16 +50,16 @@ def cache(ignore_args=[], ignore_kw=[]):
             hash = hashlib.sha256(bytes).hexdigest()
             fpath = f"{CACHE_DIR}/{f.__module__}.{f.__qualname__}-{hash}"
             cache_exist = os.path.exists(fpath)
-            LOGGER.info("%s: cache_exist=%s USE_CACHE=%s",
-                        f.__name__, cache_exist, USE_CACHE)
+            LOGGER.debug("%s: cache_exist=%s USE_CACHE=%s",
+                         f.__name__, cache_exist, USE_CACHE)
             if not cache_exist or not USE_CACHE:
-                LOGGER.info("%s: calculating", f.__name__)
+                LOGGER.debug("%s: calculating", f.__name__)
                 ret = f(*args, **kw)
                 with open(fpath, "wb") as fp:
                     pickle.dump(ret, fp)
                 return ret
             else:
-                LOGGER.info("%s: reading cache", f.__name__)
+                LOGGER.warning("%s: reading cache", f.__name__)
 
                 with open(fpath, "rb") as fp:
                     return pickle.load(fp)
