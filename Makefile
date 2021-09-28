@@ -1,24 +1,17 @@
-.PHONY: patch
-patch:
-	bumpversion patch
-	git push
+define release
+$1:
+	bump2version $$@
 	git push --tag
+endef
 
-.PHONY: minor
-minor:
-	bumpversion minor
-	git push
-	git push --tag
 
-.PHONY: major
-major:
-	bumpversion major
-	git push
-	git push --tag
+$(foreach part,patch minor major,$(eval $(call release,$(part))))
+
 
 .PHONY: build
 build:
 	poetry build
+
 
 .PHONY: publish
 publish: build
