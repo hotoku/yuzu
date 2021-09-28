@@ -2,11 +2,12 @@ import logging
 import os
 from functools import wraps
 import sys
+from typing import Callable, List, Optional
 
 
-def setup_logging(level=logging.INFO,
-                  logfile=None,
-                  format_str="%(asctime)s - %(name)s - %(levelname)s - %(message)s"):
+def setup_logging(level: int = logging.INFO,
+                  logfile: Optional[str] = None,
+                  format_str: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s") -> None:
     root_logger = logging.getLogger()
     root_logger.setLevel(level)
 
@@ -21,9 +22,9 @@ def setup_logging(level=logging.INFO,
         to_file.setFormatter(formatter)
 
 
-def get_annotation(LOGGER):
-    def log(ignore_args=[], ignore_kw=[], return_value=True):
-        def annotator(f):
+def get_annotation(LOGGER: logging.Logger):
+    def log(ignore_args: List[int] = [], ignore_kw: List[str] = [], return_value=True):
+        def annotator(f: Callable):
             @wraps(f)
             def executor(*args, **kw):
                 args_ = [a for i, a in enumerate(args) if i not in ignore_args]
@@ -37,9 +38,6 @@ def get_annotation(LOGGER):
                 else:
                     LOGGER.info(f"{f.__name__} end (pid={os.getpid()})")
                 return ret
-
             return executor
-
         return annotator
-
     return log

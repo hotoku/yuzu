@@ -5,28 +5,29 @@ from functools import wraps
 import shutil
 
 import logging
+from typing import List
 
 USE_CACHE = True
 LOGGER = logging.getLogger(__file__)
 CACHE_DIR = ".cache"
 
 
-def activate_cache():
+def activate_cache() -> None:
     global USE_CACHE
     USE_CACHE = True
 
 
-def deactivate_cache():
+def deactivate_cache() -> None:
     global USE_CACHE
     USE_CACHE = False
 
 
-def cache_dir(dir):
+def cache_dir(dir) -> None:
     global CACHE_DIR
     CACHE_DIR = dir
 
 
-def clear_cache():
+def clear_cache() -> None:
     if os.path.exists(CACHE_DIR):
         if os.path.isdir(CACHE_DIR):
             shutil.rmtree(CACHE_DIR)
@@ -35,7 +36,7 @@ def clear_cache():
     os.makedirs(CACHE_DIR)
 
 
-def cache(ignore_args=[], ignore_kw=[]):
+def cache(ignore_args: List[int] = [], ignore_kw: List[str] = []):
     def annotator(f):
         @wraps(f)
         def executor(*args, **kw):
