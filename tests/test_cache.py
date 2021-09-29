@@ -1,6 +1,7 @@
 import pytest
 
-from yuzu.cache import cache, activate_cache, deactivate_cache, clear_cache
+
+from yuzu import cache, activate_cache, deactivate_cache, clear_cache
 
 
 @pytest.fixture

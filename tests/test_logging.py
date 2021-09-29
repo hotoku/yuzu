@@ -4,29 +4,7 @@ import os
 import logging
 import sys
 
-from yuzu import logging as yl
-
-
-def setup_logger(LOGGER, logfile=None, debug=False):
-    if logfile is None:
-        logfile = os.path.join(os.getcwd(), "yuzu.log")
-
-    formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-    to_stderr = logging.StreamHandler(sys.stderr)
-    to_stderr.setFormatter(formatter)
-    to_file = logging.FileHandler(logfile)
-    to_file.setFormatter(formatter)
-    LOGGER.addHandler(to_stderr)
-    LOGGER.addHandler(to_file)
-    if not debug:
-        LOGGER.setLevel(logging.INFO)
-        to_stderr.setLevel(logging.INFO)
-        to_file.setLevel(logging.INFO)
-    else:
-        LOGGER.setLevel(logging.DEBUG)
-        to_stderr.setLevel(logging.DEBUG)
-        to_file.setLevel(logging.DEBUG)
+from yuzu import setup_logging, get_annotation
 
 
 def test_logging():
@@ -36,8 +14,8 @@ def test_logging():
     with TemporaryDirectory() as d:
         logfile = Path(d) / "test.log"
         LOGGER = logging.getLogger(__file__ + "__test_logging")
-        log = yl.get_annotation(LOGGER)
-        setup_logger(LOGGER, logfile.as_posix())
+        log = get_annotation(LOGGER)
+        setup_logging(logfile=logfile.as_posix())
 
         @log()
         def func(x, y=2):
@@ -73,8 +51,9 @@ def test_ignore():
     """
     with TemporaryDirectory() as d, ChangeDirectory(d):
         LOGGER = logging.getLogger(__file__ + "__test_ignore")
-        log = yl.get_annotation(LOGGER)
-        setup_logger(LOGGER)
+        logfile = Path(d) / "yuzu.log"
+        log = get_annotation(LOGGER)
+        setup_logging(logfile=logfile.as_posix())
 
         @log(ignore_args=[0])
         def func(x, y=2):
@@ -99,8 +78,9 @@ def test_ignore_kw():
     """
     with TemporaryDirectory() as d, ChangeDirectory(d):
         LOGGER = logging.getLogger(__file__ + "__test_ignore_kw")
-        log = yl.get_annotation(LOGGER)
-        setup_logger(LOGGER)
+        logfile = Path(d) / "yuzu.log"
+        log = get_annotation(LOGGER)
+        setup_logging(logfile=logfile)
 
         @log(ignore_kw=["y"])
         def func(x, y=2):
@@ -124,8 +104,9 @@ def test_ignore_return():
     """
     with TemporaryDirectory() as d, ChangeDirectory(d):
         LOGGER = logging.getLogger(__file__ + "__test_ignore_return")
-        log = yl.get_annotation(LOGGER)
-        setup_logger(LOGGER)
+        logfile = Path(d) / "yuzu.log"
+        log = get_annotation(LOGGER)
+        setup_logging(logfile=logfile)
 
         @log(return_value=False)
         def func(x, y=2):
