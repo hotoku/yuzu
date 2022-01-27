@@ -17,8 +17,6 @@ Lightweight and useful annotation package for logging and caching
 
 
 * Free software: MIT license
-* Documentation: https://yuzu-python.readthedocs.io.
-
 
 Features
 --------
