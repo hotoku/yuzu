@@ -32,6 +32,7 @@ def clear_cache() -> None:
         if os.path.isdir(CACHE_DIR):
             shutil.rmtree(CACHE_DIR)
         else:
+            # todo: 複数のプロセスでほぼ同時にclear_cacheが呼ばれた場合にエラーが発生する
             raise RuntimeError(f"{CACHE_DIR} exists but is not directory")
     os.makedirs(CACHE_DIR)
 
